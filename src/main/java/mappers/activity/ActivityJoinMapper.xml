@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eamon.zhuiqiu.activity.dao.ActivityJoinDao">
+
+	<resultMap id="BaseResultMap" type="com.eamon.zhuiqiu.activity.entity.ActivityJoin">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="userId" property="userId" jdbcType="INTEGER" />
+		<result column="activityId" property="activityId" jdbcType="INTEGER" />
+		<result column="des" property="des" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="addActivityJoin" parameterType="com.eamon.zhuiqiu.activity.entity.ActivityJoin">
+		insert into activity_join(id,userId,activityId,des)
+			values(#{id},#{userId},#{activityId},#{des})
+		
+	</insert>
+	
+	<delete id="deleteActivityJoin" parameterType="com.eamon.zhuiqiu.activity.entity.ActivityJoin">
+		delete from activity_join
+			where userId=#{userId} and activityId=#{activityId}
+	</delete>
+	
+	
+	<select id="selectActivityJoin" parameterType="com.eamon.zhuiqiu.activity.entity.ActivityJoin" resultMap="BaseResultMap">
+		select * from activity_join
+			where userId=#{userId} and activityId=#{activityId}
+	</select>
+	
+	
+	<select id="selectActivityJoinNum" parameterType="int" resultType="int">
+		select count(*) from activity_join
+			where activityId=#{activityId}
+	</select>
+
+
+</mapper>

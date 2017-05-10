@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eamon.zhuiqiu.news.dao.ThemeDao">
+
+	<resultMap id="BaseResultMap" type="com.eamon.zhuiqiu.news.entity.Theme">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="cName" property="cName" jdbcType="VARCHAR" />
+		<result column="eName" property="eName" jdbcType="VARCHAR" />
+		<result column="keywords" property="keywords" jdbcType="VARCHAR" />
+		<result column="des" property="des" jdbcType="VARCHAR" />
+		<result column="des" property="des" jdbcType="TINYINT" />
+	</resultMap>
+
+	<insert id="insertNewTheme" useGeneratedKeys="true" keyProperty="id" parameterType="com.eamon.zhuiqiu.news.entity.Theme">
+		insert into theme(cName,eName,keywords,des,isHide) 
+				values(#{cName},#{eName},#{keywords},#{des},#{isHide})
+		
+		
+	</insert>
+	
+	<select id="selectAll" resultMap="BaseResultMap">
+		select * from theme
+			where isDelete=false
+	</select>
+	
+	<select id="selectById" resultMap="BaseResultMap">
+		select * from theme
+			where isDelete=false 
+			and id=#{id}
+	</select>
+	
+	<update id="deleteThemeById" parameterType="int">
+		update theme
+			set isDelete=true
+			where id=#{id};
+	</update>
+
+</mapper>

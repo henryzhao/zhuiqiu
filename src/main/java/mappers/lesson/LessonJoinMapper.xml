@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eamon.zhuiqiu.lesson.dao.LessonJoinDao">
+
+	<resultMap id="BaseResultMap" type="com.eamon.zhuiqiu.lesson.entity.LessonJoin">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="userId" property="userId" jdbcType="INTEGER" />
+		<result column="lessonId" property="lessonId" jdbcType="INTEGER" />
+		<result column="des" property="des" jdbcType="VARCHAR" />
+		<result column="role" property="role" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<insert id="addLessonJoin" parameterType="com.eamon.zhuiqiu.lesson.entity.LessonJoin">
+		insert into lesson_join(id,userId,lessonId,des,role)
+			values(#{id},#{userId},#{lessonId},#{des},#{role})
+		
+	</insert>
+	
+	<delete id="deleteLessonJoin" parameterType="com.eamon.zhuiqiu.lesson.entity.LessonJoin">
+		delete from lesson_join
+			where userId=#{userId} and lessonId=#{lessonId}
+	</delete>
+	
+	
+	<select id="selectLessonJoin" parameterType="com.eamon.zhuiqiu.lesson.entity.LessonJoin" resultMap="BaseResultMap">
+		select * from lesson_join
+			where userId=#{userId} and lessonId=#{lessonId}
+	</select>
+	
+	
+	<select id="selectLessonJoinNum" parameterType="int" resultType="int">
+		select count(*) from lesson_join
+			where lessonId=#{lessonId} and role='student'
+	</select>
+
+
+</mapper>

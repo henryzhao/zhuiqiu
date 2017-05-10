@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eamon.zhuiqiu.user.dao.UserDao">
+
+	<resultMap id="BaseResultMap" type="com.eamon.zhuiqiu.user.entity.User">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="nickname" property="nickname" jdbcType="VARCHAR" />
+		<result column="head" property="head" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="salt" property="salt" jdbcType="VARCHAR" />
+		<result column="token" property="token" jdbcType="VARCHAR" />
+		<result column="role" property="role" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="tokenTime" property="tokenTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="insertNewUser" parameterType="com.eamon.zhuiqiu.user.entity.User" useGeneratedKeys="true" keyProperty="id">
+		insert into user(phone,nickname,password,salt,token)
+			values(#{phone},#{nickname},#{password},#{salt},#{token})
+	</insert>
+	
+	<select id="getUserById" parameterType="int" resultMap="BaseResultMap">
+		select * from user where id = #{id}
+	</select>
+	
+	<select id="getUserByPhone" parameterType="string" resultMap="BaseResultMap">
+		select * from user where phone = #{phone}
+	</select>
+
+	<update id="updateToken" parameterType="com.eamon.zhuiqiu.user.entity.User">
+		update user
+		set token = #{token},tokenTime=now()
+		where id = #{id}
+	</update>
+	
+	<update id="updatePassword" parameterType="com.eamon.zhuiqiu.user.entity.User">
+		update user
+		set password=#{password},salt=#{salt}
+		where id = #{id}
+	</update>
+	
+	<update id="updateNickname" parameterType="com.eamon.zhuiqiu.user.entity.User">
+		update user
+		set nickname=#{nickname}
+		where id = #{id}
+	</update>
+	
+	<update id="updateHead" parameterType="com.eamon.zhuiqiu.user.entity.User">
+		update user
+		set head=#{head}
+		where id = #{id}
+	</update>
+	
+	<update id="updateRole" parameterType="com.eamon.zhuiqiu.user.entity.User">
+		update user
+		set role=#{role}
+		where id = #{id}
+	</update>
+	
+	<select id="selectAcitvityUser" parameterType="int" resultMap="BaseResultMap">
+		select * from user where id in (select userId from activity_join where activityId=#{activityId})
+	</select>
+	
+	<select id="selectLessonUser" parameterType="int" resultMap="BaseResultMap">
+		select * from user where id in (
+			select userId from lesson_join where 
+				lessonId=#{lessonId} and role='student')
+	</select>
+	
+	
+	<select id="selectLessonTeacher" parameterType="int" resultMap="BaseResultMap">
+		select * from user where id in (
+			select userId from lesson_join where 
+				lessonId=#{lessonId} and role='teacher')
+	</select>
+	
+		<select id="selectLessonAssistant" parameterType="int" resultMap="BaseResultMap">
+		select * from user where id in (
+			select userId from lesson_join where 
+				lessonId=#{lessonId} and role='assistant')
+	</select>
+	
+	
+</mapper>

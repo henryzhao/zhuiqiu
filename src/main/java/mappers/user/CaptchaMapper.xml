@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eamon.zhuiqiu.user.dao.CaptchaDao">
+
+	<resultMap id="BaseResultMap" type="com.eamon.zhuiqiu.user.entity.Captcha">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="INTEGER" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="insertNewCaptcha" parameterType="com.eamon.zhuiqiu.user.entity.Captcha" useGeneratedKeys="true" keyProperty="id">
+		insert into captcha(phone,code)
+			values(#{phone},#{code})
+	</insert>
+	
+	<select id="getCaptchaById" parameterType="int" resultMap="BaseResultMap">
+		select * from captcha where id = #{id}
+	</select>
+	
+	<select id="getCaptchaByPhone" parameterType="string" resultMap="BaseResultMap">
+		select * from captcha where phone = #{phone} order by id desc limit 0,1
+	</select>
+
+	<delete id="invalidOldCapthcha" parameterType="int">
+		delete from captcha where id =#{id}
+	</delete>
+	
+	
+	
+</mapper>

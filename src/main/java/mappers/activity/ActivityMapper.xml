@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eamon.zhuiqiu.activity.dao.ActivityDao">
+
+	<resultMap id="BaseResultMap" type="com.eamon.zhuiqiu.activity.entity.Activity">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="creatorId" property="creatorId" jdbcType="INTEGER" />
+		<result column="location" property="location" jdbcType="VARCHAR" />
+		<result column="tags" property="tags" jdbcType="VARCHAR" />
+		<result column="des" property="des" jdbcType="VARCHAR" />
+		<result column="contact" property="contact" jdbcType="VARCHAR" />
+		<result column="peopleNum" property="peopleNum" jdbcType="INTEGER" />
+		<result column="timeStart" property="timeStart" jdbcType="TIMESTAMP" />
+		<result column="timeEnd" property="timeEnd" jdbcType="TIMESTAMP" />
+		<result column="joinStart" property="joinStart" jdbcType="TIMESTAMP" />
+		<result column="joinEnd" property="joinEnd" jdbcType="TIMESTAMP" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="insertNewActivity" useGeneratedKeys="true" keyProperty="id" parameterType="com.eamon.zhuiqiu.activity.entity.Activity">
+		insert into activity(creatorId,location,tags,peopleNum,des,contact,timeStart,timeEnd,joinStart,joinEnd)
+			values(#{creatorId},#{location},#{tags},#{peopleNum},#{des},#{contact},#{timeStart},#{timeEnd},#{joinStart},#{joinEnd})
+	</insert>
+	
+	
+	<select id="selectById" parameterType="int" resultMap="BaseResultMap">
+		select * from activity
+			where 
+				id=#{id}
+	</select>
+	
+	<select id="selectAll" resultMap="BaseResultMap">
+		select * from activity
+			order by id desc limit #{start},#{rows}
+	</select>
+	
+
+	
+	<select id="selectUserAcitvity" parameterType="int" resultMap="BaseResultMap">
+		select * from activity where id in (select activityId from activity_join where userId=#{userId})
+	</select>
+
+	
+
+</mapper>

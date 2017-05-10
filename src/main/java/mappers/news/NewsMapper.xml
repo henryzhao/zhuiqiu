@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eamon.zhuiqiu.news.dao.NewsDao">
+
+	<resultMap id="BaseResultMap" type="com.eamon.zhuiqiu.news.entity.News">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="themeId" property="themeId" jdbcType="INTEGER" />
+		<result column="headPic" property="headPic" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="subTitle" property="subTitle" jdbcType="VARCHAR" />
+		<result column="author" property="author" jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="keywords" property="keywords" jdbcType="VARCHAR" />
+		<result column="navContent" property="navContent" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="clickNum" property="clickNum" jdbcType="INTEGER" />
+		<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<insert id="insertNews" useGeneratedKeys="true" keyProperty="id" parameterType="com.eamon.zhuiqiu.news.entity.News">
+		insert into news(themeId,headPic,title,subTitle,author,source,keywords,navContent,content)
+			values(#{themeId},#{headPic},#{title},#{subTitle},#{author},#{source},#{keywords},#{navContent},#{content})
+	</insert>
+	
+	<update id="updateNews" parameterType="com.eamon.zhuiqiu.news.entity.News">
+		update news
+		set 
+			headPic=#{headPic},
+			title=#{title},
+			subTitle=#{subTitle},
+			author=#{author},
+			source=#{source},
+			keywords=#{keywords},
+			navContent=#{navContent},
+			content=#{content}
+		where id = #{id}
+	</update>
+	
+	
+	<select id="selectAllByThemeId" resultMap="BaseResultMap">
+		select * from news
+			where 
+				themeId=#{themeId} and
+				isDelete=false
+			order by id desc limit #{start},#{line}
+	</select>
+	
+	<select id="selectById" parameterType="int" resultMap="BaseResultMap">
+		select * from news
+			where 
+				id=#{id} and
+				isDelete=false
+	</select>
+	
+	<update id="addClickNum" parameterType="int">
+		update news
+		set clickNum=clickNum+1
+		where id=#{id}
+	</update>
+
+	<update id="deleteNews" parameterType="int">
+		update news
+		set isDelete=true
+		where id=#{id}
+	</update>
+
+
+</mapper>
