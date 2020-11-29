@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eamon.zhuiqiu.state.StatusException;
-import com.eamon.zhuiqiu.state.RequestLimit;
-import com.eamon.zhuiqiu.state.Status;
-import com.eamon.zhuiqiu.state.StatusCode;
 import com.eamon.zhuiqiu.user.service.UserService;
+import com.eamon.zhuiqiu.util.state.RequestLimit;
+import com.eamon.zhuiqiu.util.state.Status;
+import com.eamon.zhuiqiu.util.state.StatusCode;
+import com.eamon.zhuiqiu.util.state.StatusException;
 
 
 

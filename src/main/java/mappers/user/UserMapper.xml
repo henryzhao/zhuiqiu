@@ -22,11 +22,11 @@
 	</insert>
 	
 	<select id="getUserById" parameterType="int" resultMap="BaseResultMap">
-		select * from user where id = #{id}
+		select * from user where id = #{id} and isDelete=false
 	</select>
 	
 	<select id="getUserByPhone" parameterType="string" resultMap="BaseResultMap">
-		select * from user where phone = #{phone}
+		select * from user where phone = #{phone} and isDelete=false
 	</select>
 
 	<update id="updateToken" parameterType="com.eamon.zhuiqiu.user.entity.User">
@@ -60,27 +60,32 @@
 	</update>
 	
 	<select id="selectAcitvityUser" parameterType="int" resultMap="BaseResultMap">
-		select * from user where id in (select userId from activity_join where activityId=#{activityId})
+		select * from user where id in (select userId from activity_join where activityId=#{activityId}) and isDelete=false
 	</select>
 	
 	<select id="selectLessonUser" parameterType="int" resultMap="BaseResultMap">
 		select * from user where id in (
 			select userId from lesson_join where 
-				lessonId=#{lessonId} and role='student')
+				lessonId=#{lessonId} and role='student') and isDelete=false
 	</select>
 	
 	
 	<select id="selectLessonTeacher" parameterType="int" resultMap="BaseResultMap">
 		select * from user where id in (
 			select userId from lesson_join where 
-				lessonId=#{lessonId} and role='teacher')
+				lessonId=#{lessonId} and role='teacher') and isDelete=false
 	</select>
 	
-		<select id="selectLessonAssistant" parameterType="int" resultMap="BaseResultMap">
+	<select id="selectLessonAssistant" parameterType="int" resultMap="BaseResultMap">
 		select * from user where id in (
 			select userId from lesson_join where 
-				lessonId=#{lessonId} and role='assistant')
+				lessonId=#{lessonId} and role='assistant') and isDelete=false
 	</select>
 	
+	<select id="selectUsers" resultMap="BaseResultMap">
+		select * from user
+				where isDelete=false
+				order by id desc limit #{start},#{rows}
+	</select>
 	
 </mapper>

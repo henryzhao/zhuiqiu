@@ -63,7 +63,7 @@ public class NewsService {
 		
 		List<Map<String, Object>> resultList = new ArrayList<>();
 		newsDao.selectAllByThemeId(themeId, start, rows).stream().forEach((e)->{
-			resultList.add(genNewsMap(e));
+			resultList.add(genNewsMapWithoutContent(e));
 		});
 		return resultList;
 	}
@@ -71,6 +71,9 @@ public class NewsService {
 	
 	public Map<String, Object> getNewsById(int id) {
 		News e = newsDao.selectById(id);
+		new Thread(()->{
+			newsDao.addClickNum(e.getId());
+		}).start();
 		return genNewsMap(e);
 	}
 
@@ -86,7 +89,23 @@ public class NewsService {
 		item.put("navContent", e.getNavContent());
 		item.put("clickNum", e.getClickNum());
 		item.put("content", e.getContent());
-		item.put("updateTime", e.getUpdateTime());
+		item.put("createTime", e.getCreateTime());
+		item.put("theme", themeService.getTheme(e.getThemeId()));
+		return item;
+	}
+	
+	public Map<String, Object> genNewsMapWithoutContent(News e){
+		Map<String, Object> item = new HashMap<>();
+		item.put("id", e.getId());
+		item.put("headPic", e.getHeadPic());
+		item.put("title", e.getTitle());
+		item.put("subTitle", e.getSubTitle());
+		item.put("author", e.getAuthor());
+		item.put("source", e.getSource());
+		item.put("keywords", e.getKeywords());
+		item.put("navContent", e.getNavContent());
+		item.put("clickNum", e.getClickNum());
+		item.put("createTime", e.getCreateTime());
 		item.put("theme", themeService.getTheme(e.getThemeId()));
 		return item;
 	}

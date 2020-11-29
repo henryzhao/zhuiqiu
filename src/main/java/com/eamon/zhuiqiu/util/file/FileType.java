@@ -1,11 +1,6 @@
 package com.eamon.zhuiqiu.util.file;
 
-/**
- * 
- * 文件类型枚取(根据需要添加吧)
- * @author w-angler
- *
- */
+
 public enum FileType {
 	/**
 	 * 未知
@@ -130,7 +125,18 @@ public enum FileType {
     /** 
      * MIDI.
      */
-    MID("4D546864");
+    MID("4D546864"),
+    /** 
+     * FWS-FLASH.
+     */
+    FWS("465753"),
+    /** 
+     * CWS-FLASH.
+     */
+    SWF("435753");
+	
+	
+	
     private String value;  
       
     private FileType(String value) {  

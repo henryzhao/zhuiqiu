@@ -55,6 +55,7 @@ public class LessonService {
 		item.put("assistant", userService.getLessonAssistant(e.getId()));
 		item.put("student", userService.getLessonUser(e.getId()));
 		
+		item.put("image", e.getImage());
 		item.put("des", e.getDes());
 		item.put("contact", e.getContact());
 		item.put("price", e.getPrice());
@@ -78,6 +79,7 @@ public class LessonService {
 			String tags,
 			int peopleNum,
 			
+			String image,
 			String des,
 			String contact,
 			
@@ -99,6 +101,7 @@ public class LessonService {
 		lesson.setLocation(location);
 		lesson.setTags(tags);
 		lesson.setPeopleNum(peopleNum);
+		lesson.setImage(image);
 		lesson.setDes(des);
 		lesson.setContact(contact);
 		lesson.setWeek(week);
@@ -111,8 +114,12 @@ public class LessonService {
 		lesson.setJoinEnd(new Date(joinEnd));
 		return lessonDao.insertNewLesson(lesson);
 	}
-
-	public Map<String,Object> getLessonById(int lessonId) {
+	public Lesson getLessonById(int lessonId) {
+		return lessonDao.selectById(lessonId);
+	}
+	
+	
+	public Map<String,Object> getLessonMapById(int lessonId) {
 		Lesson e = lessonDao.selectById(lessonId);
 		return genLessonMap(e);
 	}
@@ -181,7 +188,13 @@ public class LessonService {
 		return items;
 	}
 	
-
+	public List<Map<String,Object>> selectClubLesson(int clubId) {
+		List<Map<String,Object>> items = new ArrayList<>();
+		lessonDao.selectClubLesson(clubId).forEach((e)->{
+			items.add(genLessonMap(e));
+		});
+		return items;
+	}
 	
 
 }

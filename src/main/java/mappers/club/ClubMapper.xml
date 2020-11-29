@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eamon.zhuiqiu.club.dao.ClubDao">
+
+	<resultMap id="BaseResultMap" type="com.eamon.zhuiqiu.club.entity.Club">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="districtId" property="districtId" jdbcType="INTEGER" />
+		<result column="des" property="des" jdbcType="VARCHAR" />
+		<result column="image" property="image" jdbcType="VARCHAR" />
+		<result column="badge" property="badge" jdbcType="VARCHAR" />
+		<result column="more" property="more" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertNewClub" useGeneratedKeys="true" keyProperty="id" parameterType="com.eamon.zhuiqiu.club.entity.Club">
+		insert into club(name,des,districtId,image,badge,more) 
+				values(#{name},#{des},#{districtId},#{image},#{badge},#{more})
+	</insert>
+	
+	<select id="getClubById" parameterType="int" resultMap="BaseResultMap">
+		select * from club
+			where id=#{id} and isDelete=false
+	</select>
+
+	<select id="getClubs" resultMap="BaseResultMap">
+		select * from club where isDelete=false
+			order by id desc limit #{start},#{line}
+	</select>
+	
+	<select id="getClubsByDistrictId" parameterType="int" resultMap="BaseResultMap">
+		select * from club where isDelete=false and districtId=#{districtId}
+			order by id desc
+	</select>
+	
+
+</mapper>

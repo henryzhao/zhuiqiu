@@ -1,4 +1,4 @@
-package com.eamon.zhuiqiu.interceptor;
+package com.eamon.zhuiqiu.util.interceptor;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -10,11 +10,11 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.eamon.zhuiqiu.state.RequestLimit;
-import com.eamon.zhuiqiu.state.StatusCode;
-import com.eamon.zhuiqiu.state.StatusException;
 import com.eamon.zhuiqiu.user.entity.User;
 import com.eamon.zhuiqiu.user.service.UserService;
+import com.eamon.zhuiqiu.util.state.RequestLimit;
+import com.eamon.zhuiqiu.util.state.StatusCode;
+import com.eamon.zhuiqiu.util.state.StatusException;
 
 /**
  * @author Eamon 留给小纯洁的ajax权限header
@@ -28,7 +28,7 @@ public class AllInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
 		resp.addHeader("Access-Control-Allow-Origin", "*");
 		resp.addHeader("Access-Control-Allow-Methods", "*");
-		resp.addHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");
+		resp.addHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, X-File-Name");
 		return roleControl(req, resp, handler);
 	}
 
@@ -123,6 +123,7 @@ public class AllInterceptor implements HandlerInterceptor {
 				return false;
 			}
 		}
+		
 		return false;
 
 	}

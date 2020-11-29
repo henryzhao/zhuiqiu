@@ -1,4 +1,4 @@
-package com.eamon.zhuiqiu.state;
+package com.eamon.zhuiqiu.util.state;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

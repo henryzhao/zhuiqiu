@@ -1,5 +1,6 @@
 package com.eamon.zhuiqiu.file.service;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,32 +11,42 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.eamon.zhuiqiu.util.file.FileUpload;
 
 
+
+
+
 @Service
 public class FileService {
-
-	/**
-	 * 上传项目图片
-	 * @param categoryId 分类ID
-	 * @param projectId 项目ID 
-	 * @param files 图片
-	 * @return
-	 */
-	public List<String> uploadImages(CommonsMultipartFile[] files){
-		String dir= ""+System.currentTimeMillis();
-		//String[] paths=new String[files.length];
-		List<String> paths = new ArrayList<>();
-		for(int i=0;i<files.length;i++){
-			try {
-				paths.add(
-						FileUpload.save(files[i], FileUpload.Path.COM_IMAGE, dir)
-						);
-				//paths[i]=FileUpload.save(files[i], FileUpload.Path.COM_IMAGE, dir);
-			} catch (IOException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-		return paths;
+	
+	
+	public String uploadImageFile(CommonsMultipartFile file,String placeholder) throws IOException{
+		String loc = FileUpload.save(file, FileUpload.Path.IMAGE_FILE, placeholder+"");
+		return loc;
 	}
+
+	public Object uploadImageFiles(CommonsMultipartFile[] files,int userId) throws IOException {
+		// TODO Auto-generated method stub
+		List<String> imageList = new ArrayList<>();
+		
+		for(CommonsMultipartFile file:files){
+			imageList.add(uploadImageFile(file,userId+""));
+		}
+		return imageList;
+	}
+
+	public Object uploadImageFilesByType(CommonsMultipartFile[] files,String type) throws IOException {
+		List<String> imageList = new ArrayList<>();
+		
+		for(CommonsMultipartFile file:files){
+			imageList.add(uploadImageFile(file,type));
+		}
+		return imageList;
+	}
+
+	public Object uploadFlashFile(CommonsMultipartFile file, String placeholder) throws IOException {
+		String loc = FileUpload.save(file, FileUpload.Path.FLASH_FILE, placeholder+"");
+		return loc;
+	}
+	
+	
 
 }

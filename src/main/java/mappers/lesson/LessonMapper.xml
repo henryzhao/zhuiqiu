@@ -8,6 +8,7 @@
 		<result column="lessonName" property="lessonName" jdbcType="VARCHAR" />
 		<result column="location" property="location" jdbcType="VARCHAR" />
 		<result column="tags" property="tags" jdbcType="VARCHAR" />
+		<result column="image" property="image" jdbcType="VARCHAR" />
 		<result column="des" property="des" jdbcType="VARCHAR" />
 		<result column="contact" property="contact" jdbcType="VARCHAR" />
 		<result column="peopleNum" property="peopleNum" jdbcType="INTEGER" />
@@ -27,8 +28,8 @@
 	</resultMap>
 
 	<insert id="insertNewLesson" useGeneratedKeys="true" keyProperty="id" parameterType="com.eamon.zhuiqiu.lesson.entity.Lesson">
-		insert into lesson(creatorId,lessonName,location,tags,peopleNum,des,contact,week,price,timeStart,timeEnd,joinStart,joinEnd,dateStart,dateEnd)
-			values(#{creatorId},#{lessonName},#{location},#{tags},#{peopleNum},#{des},#{contact},#{week},#{price},#{timeStart},#{timeEnd},#{joinStart},#{joinEnd},#{dateStart},#{dateEnd})
+		insert into lesson(creatorId,lessonName,location,tags,peopleNum,image,des,contact,week,price,timeStart,timeEnd,joinStart,joinEnd,dateStart,dateEnd)
+			values(#{creatorId},#{lessonName},#{location},#{tags},#{peopleNum},#{image},#{des},#{contact},#{week},#{price},#{timeStart},#{timeEnd},#{joinStart},#{joinEnd},#{dateStart},#{dateEnd})
 	</insert>
 	
 	
@@ -45,11 +46,15 @@
 	</select>
 	
 
-	
 	<select id="selectUserLesson" parameterType="int" resultMap="BaseResultMap">
-		select * from lesson where isDelete=false and id in (select activityId from activity_join where isDelete=false and userId=#{userId} )
+		select * from lesson where isDelete=false and 
+			id in (select activityId from activity_join where isDelete=false and userId=#{userId} )
 	</select>
 
+	<select id="selectClubLesson" parameterType="int" resultMap="BaseResultMap">
+		select * from lesson where  isDelete=false and 
+			id in (select lessonId from club_lesson where isDelete=false and clubId=#{clubId})
+	</select>
 	
 
 </mapper>

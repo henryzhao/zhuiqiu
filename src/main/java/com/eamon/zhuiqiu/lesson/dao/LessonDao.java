@@ -22,4 +22,6 @@ public interface LessonDao {
 	Lesson selectById(int id);
 
 	List<Lesson> selectUserLesson(int userId);
+	
+	List<Lesson> selectClubLesson(int clubId);
 }

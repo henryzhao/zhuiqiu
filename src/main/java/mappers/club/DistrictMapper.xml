@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eamon.zhuiqiu.club.dao.DistrictDao">
+
+	<resultMap id="BaseResultMap" type="com.eamon.zhuiqiu.club.entity.District">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="des" property="des" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="insertNewDistrict" useGeneratedKeys="true" keyProperty="id" parameterType="com.eamon.zhuiqiu.club.entity.District">
+		insert into district(name,des) 
+				values(#{name},#{des})
+	</insert>
+	
+	<select id="getDistrictById" parameterType="int" resultMap="BaseResultMap">
+		select * from district
+			where id=#{id} and isDelete=false
+	</select>
+
+	<select id="getDistricts" resultMap="BaseResultMap">
+		select * from district where isDelete=false
+			order by id desc
+	</select>
+
+</mapper>

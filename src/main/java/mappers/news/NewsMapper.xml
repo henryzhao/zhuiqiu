@@ -15,6 +15,7 @@
 		<result column="content" property="content" jdbcType="VARCHAR" />
 		<result column="clickNum" property="clickNum" jdbcType="INTEGER" />
 		<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
 
 	<insert id="insertNews" useGeneratedKeys="true" keyProperty="id" parameterType="com.eamon.zhuiqiu.news.entity.News">

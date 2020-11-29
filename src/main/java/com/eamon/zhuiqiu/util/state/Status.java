@@ -1,4 +1,4 @@
-package com.eamon.zhuiqiu.state;
+package com.eamon.zhuiqiu.util.state;
 
 
 public class Status {

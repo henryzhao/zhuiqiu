@@ -23,6 +23,8 @@ public class Lesson {
 	
 	private int peopleNum;
 	
+	private String image;
+	
 	private String des;
 	
 	private String contact;

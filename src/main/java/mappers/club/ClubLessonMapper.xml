@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eamon.zhuiqiu.club.dao.ClubLessonDao">
+
+	<resultMap id="BaseResultMap" type="com.eamon.zhuiqiu.club.entity.ClubLesson">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="districtId" property="districtId" jdbcType="INTEGER" />
+		<result column="des" property="des" jdbcType="VARCHAR" />
+		<result column="image" property="image" jdbcType="VARCHAR" />
+		<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+
+	<insert id="linkClubLesson" useGeneratedKeys="true" keyProperty="id" parameterType="com.eamon.zhuiqiu.club.entity.ClubLesson">
+		insert into club_lesson(clubId,lessonId,des)
+			values(#{clubId},#{lessonId},#{des})
+	</insert>
+	
+	<update id="unlinkClubLesson" parameterType="com.eamon.zhuiqiu.club.entity.ClubLesson">
+		update club_lesson
+			set isDelete = true
+			where clubId = #{clubId} and lessonId=#{lessonId}
+	</update>
+
+</mapper>

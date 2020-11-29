@@ -21,10 +21,13 @@
 	<!-- 静态资源访问 -->
 	<mvc:resources location="/" mapping="/**" />
 
+	<!-- swagger静态资源访问配置 -->
+	<mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
+	<mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
 
 	<mvc:interceptors>
 		<!-- 使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求 -->
-		<bean class="com.eamon.zhuiqiu.interceptor.AllInterceptor" />
+		<bean class="com.eamon.zhuiqiu.util.interceptor.AllInterceptor" />
 	</mvc:interceptors>
 
 	<!-- 避免IE在ajax请求时，返回json出现下载 -->

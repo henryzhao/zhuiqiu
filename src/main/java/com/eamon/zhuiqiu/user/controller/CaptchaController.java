@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eamon.zhuiqiu.state.StatusException;
-import com.eamon.zhuiqiu.state.Status;
-import com.eamon.zhuiqiu.state.StatusCode;
 import com.eamon.zhuiqiu.user.service.CaptchaService;
+import com.eamon.zhuiqiu.util.state.Status;
+import com.eamon.zhuiqiu.util.state.StatusCode;
+import com.eamon.zhuiqiu.util.state.StatusException;
 
 
 

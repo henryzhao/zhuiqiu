@@ -34,4 +34,6 @@ public interface UserDao {
 	List<User> selectLessonTeacher(@Param("lessonId") int lessonId);
 	
 	List<User> selectLessonAssistant(@Param("lessonId") int lessonId);
+
+	List<User> selectUsers(@Param("start")int start,@Param("rows") int rows);
 }

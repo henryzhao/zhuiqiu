@@ -34,4 +34,5 @@ public class News {
 	
 	private Date updateTime;
 	
+	private Date createTime;
 }

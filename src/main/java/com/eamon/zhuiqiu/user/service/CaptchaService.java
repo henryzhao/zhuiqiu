@@ -6,11 +6,11 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.eamon.zhuiqiu.state.StatusException;
-import com.eamon.zhuiqiu.state.StatusCode;
 import com.eamon.zhuiqiu.user.dao.CaptchaDao;
 import com.eamon.zhuiqiu.user.entity.Captcha;
 import com.eamon.zhuiqiu.util.captcha.MobileCaptcha;
+import com.eamon.zhuiqiu.util.state.StatusCode;
+import com.eamon.zhuiqiu.util.state.StatusException;
 
 
 @Service

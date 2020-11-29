@@ -184,7 +184,12 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.2</version>
+			<version>4.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpmime</artifactId>
+			<version>4.4</version>
 		</dependency>
 		<!-- end of httpclient -->
 
@@ -228,6 +233,7 @@
 			<version>1.16.8</version>
 		</dependency>
 		<!-- end of lombok -->
+		<!-- lombok -->
 
 		<!-- shiro -->
 		<dependency>
@@ -276,50 +282,100 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.ymxiong.open</groupId>
-			<artifactId>util</artifactId>
-			<version>1.0.2</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.ymxiong.open</groupId>-->
+			<!--<artifactId>util</artifactId>-->
+			<!--<version>1.0.2</version>-->
+		<!--</dependency>-->
 
-		<!-- lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.8</version>
-		</dependency>
-		<!-- end of lombok -->
+
 
 		<!-- <dependency> <groupId>eamon</groupId> <artifactId>mobile</artifactId> 
 			<version>1.0</version> <scope>system</scope> <systemPath>${basedir}/src/libs/mobile-zhuiqiu.jar</systemPath> 
 			</dependency> -->
 
 		<!-- lombok -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.3</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>org.apache.httpcomponents</groupId>-->
+			<!--<artifactId>httpclient</artifactId>-->
+			<!--<version>4.5.3</version>-->
+		<!--</dependency>-->
+
+		<!--<dependency>-->
+			<!--<groupId>org.apache.httpcomponents</groupId>-->
+			<!--<artifactId>httpmime</artifactId>-->
+			<!--<version>4.5.2</version>-->
+		<!--</dependency>-->
 
 		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpmime</artifactId>
-			<version>4.5.2</version>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.3</version>
 		</dependency>
-
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>commons-logging</groupId>-->
+			<!--<artifactId>commons-logging</artifactId>-->
+			<!--<version>1.1.1</version>-->
+		<!--</dependency>-->
+		<dependency>
+			<groupId>net.sf.ezmorph</groupId>
+			<artifactId>ezmorph</artifactId>
+			<version>1.0.6</version>
+		</dependency>
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
 			<version>2.4</version>
+			<classifier>jdk15</classifier>
 		</dependency>
-		
+
+		<!--<dependency>-->
+			<!--<groupId>com.alibaba</groupId>-->
+			<!--<artifactId>fastjson</artifactId>-->
+			<!--<version>1.2.28</version>-->
+		<!--</dependency>-->
+		<!--jackson-->
+		<!--<dependency>-->
+			<!--<groupId>com.fasterxml.jackson.core</groupId>-->
+			<!--<artifactId>jackson-core</artifactId>-->
+			<!--<version>2.4.3</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>com.fasterxml.jackson.core</groupId>-->
+			<!--<artifactId>jackson-databind</artifactId>-->
+			<!--<version>2.4.3</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>com.fasterxml.jackson.core</groupId>-->
+			<!--<artifactId>jackson-annotations</artifactId>-->
+			<!--<version>2.4.3</version>-->
+		<!--</dependency>-->
+
+		<!--springfox的核心jar包-->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+		<!--springfox-ui的jar包(里面包含了swagger的界面静态文件)-->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.4.0</version>
+		</dependency>
 
 
 	</dependencies>
-
-
-
-
 
 	<build>
 		<finalName>zhuiqiu</finalName>
@@ -327,6 +383,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>

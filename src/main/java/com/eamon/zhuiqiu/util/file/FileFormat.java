@@ -35,6 +35,28 @@ public class FileFormat {
 		}
 		return compare(fileHead.toUpperCase());
 	}
+	
+	/**
+	 * 是否是Flash格式
+	 * @param in
+	 * @return
+	 * @throws IOException
+	 */
+	public static boolean isFlash(InputStream in)throws IOException{
+		return isFlash(judge(in));
+	}
+	
+	private static boolean isFlash(FileType fileType){
+		switch(fileType){
+		case SWF:
+			return true;
+		case FWS:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
 	/**
 	 * 是否是图片格式
 	 * @param in

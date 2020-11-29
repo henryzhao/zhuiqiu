@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eamon.zhuiqiu.lesson.service.LessonService;
-import com.eamon.zhuiqiu.state.RequestLimit;
-import com.eamon.zhuiqiu.state.Status;
-import com.eamon.zhuiqiu.state.StatusCode;
-import com.eamon.zhuiqiu.state.StatusException;
 import com.eamon.zhuiqiu.user.service.UserService;
+import com.eamon.zhuiqiu.util.state.RequestLimit;
+import com.eamon.zhuiqiu.util.state.Status;
+import com.eamon.zhuiqiu.util.state.StatusCode;
+import com.eamon.zhuiqiu.util.state.StatusException;
 
 
 @Controller
@@ -36,7 +36,7 @@ public class LessonController {
 	@RequestMapping(path="",method=RequestMethod.GET)
 	@ResponseBody
 	public Status recent(
-			int page,
+			@RequestParam int page,
 			@RequestParam(required=false,defaultValue="10") int rows
 			){
 		try{
@@ -61,6 +61,7 @@ public class LessonController {
 			@RequestParam String tags,
 			@RequestParam int peopleNum,
 			
+			@RequestParam String image,
 			@RequestParam String des,
 			@RequestParam String contact,
 			
@@ -86,6 +87,7 @@ public class LessonController {
 					location, 
 					tags, 
 					peopleNum, 
+					image,
 					des, 
 					contact, 
 					week, 
@@ -113,7 +115,7 @@ public class LessonController {
 			@PathVariable int lessonId
 			){
 		try{
-			return new Status(true,StatusCode.SUCCESS,lessonService.getLessonById(lessonId),0);
+			return new Status(true,StatusCode.SUCCESS,lessonService.getLessonMapById(lessonId),0);
 		}catch(Exception e){
 			e.printStackTrace();
 			return new Status(false,StatusCode.FAILED,0,0);
@@ -186,6 +188,7 @@ public class LessonController {
 	 * 我的课程
 	 * @return
 	 */
+	@RequestLimit(RequestLimit.USER_PRIVATE)
 	@RequestMapping(path="user/{userId}",method=RequestMethod.GET)
 	@ResponseBody
 	public Status iJoin(
@@ -217,7 +220,7 @@ public class LessonController {
 			return new Status(
 					true,
 					StatusCode.SUCCESS,
-					0,
+					userService.getLessonUser(lessonId),
 					0);
 		}catch(Exception e){
 			e.printStackTrace();

@@ -25,7 +25,7 @@ import net.sf.json.JSONObject;
  * occured before sending.That is, create a signature and build the request
  * data.
  * 
- * @see Mail
+ * @see
  * @see Message
  * @version 1.0 at 2014/10/30
  * */

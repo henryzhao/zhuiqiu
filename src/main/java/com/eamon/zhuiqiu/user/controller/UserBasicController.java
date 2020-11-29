@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eamon.zhuiqiu.state.StatusException;
-import com.eamon.zhuiqiu.state.Status;
-import com.eamon.zhuiqiu.state.StatusCode;
 import com.eamon.zhuiqiu.user.service.UserService;
+import com.eamon.zhuiqiu.util.state.Status;
+import com.eamon.zhuiqiu.util.state.StatusCode;
+import com.eamon.zhuiqiu.util.state.StatusException;
 
 
 
@@ -67,6 +67,19 @@ public class UserBasicController {
 			){
 		try {
 			return new Status(true, StatusCode.SUCCESS, userService.login(phone, password), null);
+		} catch (Exception e) {
+			return StatusException.procExcp(e);
+		}
+	}
+	
+	@RequestMapping(path = "login/admin")
+	@ResponseBody
+	public Status loginA(
+			@RequestParam String phone,
+			@RequestParam String password
+			){
+		try {
+			return new Status(true, StatusCode.SUCCESS, userService.loginAdmin(phone, password), null);
 		} catch (Exception e) {
 			return StatusException.procExcp(e);
 		}

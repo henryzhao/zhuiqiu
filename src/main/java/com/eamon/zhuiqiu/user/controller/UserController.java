@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eamon.zhuiqiu.state.StatusException;
-import com.eamon.zhuiqiu.state.RequestLimit;
-import com.eamon.zhuiqiu.state.Status;
-import com.eamon.zhuiqiu.state.StatusCode;
 import com.eamon.zhuiqiu.user.service.UserService;
+import com.eamon.zhuiqiu.util.state.RequestLimit;
+import com.eamon.zhuiqiu.util.state.Status;
+import com.eamon.zhuiqiu.util.state.StatusCode;
+import com.eamon.zhuiqiu.util.state.StatusException;
 
 
 
@@ -92,7 +92,7 @@ public class UserController {
 		}
 	}
 	
-	
+	@RequestLimit(RequestLimit.USER_PRIVATE)
 	@RequestMapping(path = "{userId}/info",method=RequestMethod.GET)
 	@ResponseBody
 	public Status info(
@@ -104,6 +104,35 @@ public class UserController {
 			return StatusException.procExcp(e);
 		}
 	}
+	
+	@RequestLimit(RequestLimit.ADMIN_PRIVATE)
+	@RequestMapping(path = "/info",method=RequestMethod.GET)
+	@ResponseBody
+	public Status userInfo(
+			@RequestParam int page,
+			@RequestParam(required=false,defaultValue="10") int rows
+			){
+		try {
+			return new Status(true, StatusCode.SUCCESS, userService.getUsers(page,rows), null);
+		} catch (Exception e) {
+			return StatusException.procExcp(e);
+		}
+	}
+	
+	
+	@RequestLimit(RequestLimit.ADMIN_PRIVATE)
+	@RequestMapping(path = "/search/{phone}",method=RequestMethod.GET)
+	@ResponseBody
+	public Status searchUserInfo(
+			@PathVariable String phone
+			){
+		try {
+			return new Status(true, StatusCode.SUCCESS, userService.getUserMapByPhone(phone), null);
+		} catch (Exception e) {
+			return StatusException.procExcp(e);
+		}
+	}
+	
 	
 	
 }

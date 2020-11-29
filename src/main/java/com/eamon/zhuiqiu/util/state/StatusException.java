@@ -1,4 +1,4 @@
-package com.eamon.zhuiqiu.state;
+package com.eamon.zhuiqiu.util.state;
 
 public class StatusException extends Exception{
 	private static final long serialVersionUID = 6922891378191357989L;

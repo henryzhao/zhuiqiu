@@ -7,16 +7,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.eamon.zhuiqiu.util.security.CipherMethod;
+import com.eamon.zhuiqiu.util.security.CodeMethod;
+import com.eamon.zhuiqiu.util.security.SecurityFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.eamon.zhuiqiu.state.StatusException;
-import com.eamon.zhuiqiu.state.StatusCode;
 import com.eamon.zhuiqiu.user.dao.UserDao;
 import com.eamon.zhuiqiu.user.entity.User;
-import com.ymxiong.open.util.security.SecurityFactory;
+import com.eamon.zhuiqiu.util.state.RequestLimit;
+import com.eamon.zhuiqiu.util.state.StatusCode;
+import com.eamon.zhuiqiu.util.state.StatusException;
 
 /**
  * @author Eamon
@@ -117,6 +121,19 @@ public class UserService {
 		return genUserMapWithToken(user);
 	}
 	
+	public Map<String, Object> loginAdmin(String phone, String password) throws StatusException {
+		User user = userDao.getUserByPhone(phone);
+		//检测用户是否已存在
+		checkUserNull(user);
+		checkAdmin(user);
+		password = convertPassword(password, user.getSalt());
+		//检测密码
+		checkPassword(password,user.getPassword());
+		
+		user.setToken(randomToken());
+		userDao.updateToken(user);
+		return genUserMapWithToken(user);
+	}
 	
 	
 	/**
@@ -124,7 +141,18 @@ public class UserService {
 	 * @param user
 	 * @throws StatusException
 	 */
-	private void checkUserNull(User user) throws StatusException {
+	private void checkAdmin(User user) throws StatusException {
+		if(!user.getRole().equals(RequestLimit.SUPER_ADMIN)&&
+				!user.getRole().equals(RequestLimit.ADMIN))throw new StatusException(StatusCode.PERMISSION_LOW);
+		
+	}
+	
+	/**
+	 * 检测用户是否不存在
+	 * @param user
+	 * @throws StatusException
+	 */
+	public void checkUserNull(User user) throws StatusException {
 		if(user==null)throw new StatusException(StatusCode.USER_NULL);
 		
 	}
@@ -195,11 +223,16 @@ public class UserService {
 	
 	
 	private String convertPassword(String password,String salt){
-		return SecurityFactory.getCodeMothod("MD5").encode(password + salt);
+		return SecurityFactory.getCodeMethod(CodeMethod.SUPPORT.CODE_MD5).encode(password + salt);
 	}
 	
 	private Map<String, Object> genUserMapWithToken(User user){
 		Map<String, Object> item = genUserMap(user);
+		item.put("id", user.getId());
+		item.put("nickname", user.getNickname());
+		item.put("phone", convertPhone(user.getPhone()));
+		item.put("role", user.getRole());
+		item.put("head", user.getHead());
 		item.put("token", user.getToken());
 		return item;
 	}
@@ -209,6 +242,8 @@ public class UserService {
 		item.put("id", user.getId());
 		item.put("nickname", user.getNickname());
 		item.put("phone", convertPhone(user.getPhone()));
+		item.put("role", user.getRole());
+		item.put("head", user.getHead());
 		return item;
 	}
 	
@@ -226,6 +261,18 @@ public class UserService {
 		checkUserNull(user);
 		return user;
 	}
+	
+	public Map<String, Object> getUserMapByPhone(String phone) throws StatusException {
+		User user = getUserByPhone(phone);
+		return genUserMap(user);
+	}
+	
+	public User getUserByPhone(String phone) throws StatusException {
+		User user = userDao.getUserByPhone(phone);
+		checkUserNull(user);
+		return user;
+	}
+	
 
 	public int changeNickname(int id,String nickname) {
 		User user = new User();
@@ -284,6 +331,21 @@ public class UserService {
 		});
 		return userList;
 	}
+
+	public List<Map<String,Object>> getUsers(int page, int rows) {
+		if(page<0)return null;
+		int start = (page-1)*rows;
+		List<Map<String,Object>> userList = new ArrayList<>();
+		userDao.selectUsers(start,rows).stream().forEach((e)->{
+			Map<String,Object> item = genUserMap(e);
+			userList.add(item);
+		});
+		return userList;
+	}
+
+
+
+
 	
 }
 

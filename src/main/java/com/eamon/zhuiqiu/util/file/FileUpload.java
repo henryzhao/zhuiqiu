@@ -5,11 +5,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.eamon.zhuiqiu.util.security.CodeMethod;
+import com.eamon.zhuiqiu.util.security.SecurityFactory;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.ymxiong.open.util.security.SecurityFactory;
+
 
 /**
  * 文件上传
@@ -28,24 +31,14 @@ public class FileUpload {
 	 *
 	 */
 	public static enum Path{
-//		USER_HEAD{
-//			public String getPath(){
-//				return FileUpload.userHead;
-//			}
-//		},
-//		PROJECT_ATTACHMENT{
-//			public String getPath(){
-//				return FileUpload.projectAttachment;
-//			}
-//		},
-//		CHAT_FILES{
-//			public String getPath(){
-//				return FileUpload.chatFiles;
-//			}
-//		},
-		COM_IMAGE{
+		IMAGE_FILE{
 			public String getPath(){
-				return FileUpload.comImage;
+				return FileUpload.imageFile;
+			}
+		},
+		FLASH_FILE{
+			public String getPath(){
+				return FileUpload.flashFile;
 			}
 		};
 		public abstract String getPath();
@@ -54,26 +47,15 @@ public class FileUpload {
 	 * 根目录
 	 */
 	private static String basePath;
-	
-	
-	private static String comImage;
-//	/**
-//	 * 头像
-//	 */
-//	private static String userHead;
-//	/**
-//	 * 项目附件
-//	 */
-//	private static String projectAttachment;
-//	/**
-//	 * 群聊文件（图片等）
-//	 */
-//	private static String chatFiles;
-//	
-//	/**
-//	 * 用户动态
-//	 */
-//	private static String userMoment;
+	/**
+	 * 图片
+	 */
+	private static String imageFile;
+
+	/**
+	 * FLASH
+	 */
+	private static String flashFile;
 
 	//加载配置
 	static{
@@ -82,7 +64,8 @@ public class FileUpload {
 		try {
 			prop.load(resource.getInputStream());
 			basePath=prop.getProperty("base.path");
-			comImage=prop.getProperty("com.image");
+			imageFile=prop.getProperty("image.file");
+			flashFile=prop.getProperty("flash.file");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -97,15 +80,8 @@ public class FileUpload {
 	 * 保存文件
 	 */
 	public static String save(CommonsMultipartFile file,Path path,String replace) throws IOException{
-
 		FileItem fileItem=FileUpload.parse(file);
-		
-		String savePath=
-				(
-						path.getPath()+fileItem.getFileName()
-				)
-				.replace("{placeholder}", replace);
-
+		String savePath=(path.getPath()+fileItem.getFileName()).replace("{placeholder}", replace);
 		FileUpload.save(fileItem,savePath);
 
 		return savePath;
@@ -137,7 +113,7 @@ public class FileUpload {
 	 */
 	private static FileItem parse(CommonsMultipartFile file) throws IOException{
 		return new FileItem(file.getBytes(),
-				SecurityFactory.getCodeMothod("MD5").encode(file.getOriginalFilename())+System.currentTimeMillis()+"."
+				SecurityFactory.getCodeMethod(CodeMethod.SUPPORT.CODE_MD5).encode(file.getBytes())+"."
 						+FileFormat.judge(file.getInputStream()).toString().toLowerCase());
 	}
 
