@@ -1,6 +1,11 @@
 package com.eamon.zhuiqiu.news.controller;
 
 
+import com.eamon.zhuiqiu.news.entity.News;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +22,7 @@ import com.eamon.zhuiqiu.util.state.StatusCode;
 
 @Controller
 @RequestMapping(path = "news")
+//@Api(tags = "新闻信息")
 public class NewsController {
 	
 	@Autowired
@@ -28,6 +34,10 @@ public class NewsController {
 	 */
 	@RequestMapping(path="theme/{themeId}",method=RequestMethod.GET)
 	@ResponseBody
+//	@ApiResponses(value = {
+//			@ApiResponse(code = 500, message = "系统错误"),
+//			@ApiResponse(code = 200, message = "0 成功,其它为错误,返回格式：{code:0,data[{}]},data中的属性参照下方Model", response = News.class) })
+//	@ApiOperation(httpMethod = "GET", value = "新闻信息")//swagger 当前接口注解
 	public Status getNews(
 			@PathVariable int themeId,
 			@RequestParam int page,

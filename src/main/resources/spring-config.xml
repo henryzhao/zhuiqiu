@@ -68,10 +68,11 @@
 			<value>clientEncoding=UTF-8</value>
 		</property>
 	</bean>
+	<!-- Mapper 配置 -->
 	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 		<property name="dataSource" ref="dataSource"></property>
-		<property name="mapperLocations" value="classpath:mappers/**/*.xml"></property>
+		<property name="mapperLocations" value="classpath*:mappers/**/*.xml"></property>
 	</bean>
 	
 	<!-- Dao 配置 -->

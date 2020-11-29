@@ -1,5 +1,6 @@
 package com.eamon.zhuiqiu.user.controller;
 
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.eamon.zhuiqiu.util.state.StatusException;
 
 @Controller
 @RequestMapping("user")
+@Api(tags = "二：用户信息") //swagger分类标题注解
 public class UserController {
 
 	private final Logger Log = LoggerFactory.getLogger(getClass());
